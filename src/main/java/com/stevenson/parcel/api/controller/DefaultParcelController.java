@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
 import java.util.List;
 
-@RequestMapping("api/v1/parcel")
+@RequestMapping("api/v1/parcels")
 @RestController
 public class DefaultParcelController implements ParcelController {
 
@@ -41,14 +41,14 @@ public class DefaultParcelController implements ParcelController {
                         .width(request.getWidth())
                         .height(request.getHeight())
                         .build());
-//        Pageable paging = PageRequest.of(0, 5, Sort.by(Sort.Direction.ASC, "priority"));
-////        List<Rule> rules = ruleService.retrieveAll(paging);
-////        for(Rule rule: rules){
-////            if(rule.applies(parcel)){
-////                parcel.getCost(rule);
-////                break;
-////            }
-////        }
+        Pageable paging = PageRequest.of(0, 5, Sort.by(Sort.Direction.ASC, "priority"));
+        List<Rule> rules = ruleService.retrieveAll(paging);
+        for(Rule rule: rules){
+            if(rule.applies(parcel)){
+                parcel.applyRule(rule);
+                break;
+            }
+        }
         ParcelResponse data = new ParcelResponse(parcel);
         return new ResponseEntity<>(data, HttpStatus.CREATED);
     }

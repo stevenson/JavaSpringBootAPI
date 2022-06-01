@@ -4,10 +4,15 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+
+import java.util.List;
 
 import static javax.persistence.GenerationType.AUTO;
 
@@ -43,14 +48,23 @@ public class Parcel {
         void prebuild(){
             // additional processing with class fields can be performed here
             computeVolume();
-            computeCost();
+            computeDefaultCost();
         }
         private void computeVolume(){
             this.volume = this.length*this.width*this.height;
-            computeCost();
         }
-        private void computeCost(){
+        private void computeDefaultCost(){
             this.cost = 0.4 * this.volume;
+        }
+    }
+
+    public void applyRule(Rule rule){
+        switch(rule.getFactor()){
+            case "weight":
+                this.cost = rule.getRate() * this.weight;
+            case "volume":
+            default:
+               this.cost= rule.getRate() * this.volume;
         }
     }
 

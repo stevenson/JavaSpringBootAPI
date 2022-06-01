@@ -36,18 +36,19 @@ public class DefaultParcelController implements ParcelController {
     public ResponseEntity<ParcelResponse> addParcel(@Valid @NonNull @RequestBody Parcel request) {
 
         Parcel parcel = parcelService.create(Parcel.builder()
+                        .weight(request.getWeight())
                         .length(request.getLength())
                         .width(request.getWidth())
                         .height(request.getHeight())
                         .build());
-        Pageable paging = PageRequest.of(0, 5, Sort.by(Sort.Direction.ASC, "priority"));
-        List<Rule> rules = ruleService.retrieveAll(paging);
-        for(Rule rule: rules){
-            if(rule.applies(parcel)){
-                parcel.getCost(rule);
-                break;
-            }
-        }
+//        Pageable paging = PageRequest.of(0, 5, Sort.by(Sort.Direction.ASC, "priority"));
+////        List<Rule> rules = ruleService.retrieveAll(paging);
+////        for(Rule rule: rules){
+////            if(rule.applies(parcel)){
+////                parcel.getCost(rule);
+////                break;
+////            }
+////        }
         ParcelResponse data = new ParcelResponse(parcel);
         return new ResponseEntity<>(data, HttpStatus.CREATED);
     }

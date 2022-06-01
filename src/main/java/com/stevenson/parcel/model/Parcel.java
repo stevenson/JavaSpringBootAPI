@@ -26,21 +26,36 @@ public class Parcel {
     private double width;
     private double length;
     private double volume;
-    private double cost = 0;
+    private double cost;
 
-    public double getVolume(){
-        this.volume = this.length*this.width*this.height;
-        return this.volume;
-    }
-    public double getCost(){
-        if(this.cost == 0){
+    public static class ParcelBuilder {
+        public ParcelBuilder weight(double weight){
+            this.weight = weight;
+            computeCost();
+            return this;
+        }
+        public ParcelBuilder length(double length){
+            this.length = length;
+            computeVolume();
+            return this;
+        }
+        public ParcelBuilder width(double width){
+            this.width = width;
+            computeVolume();
+            return this;
+        }
+        public ParcelBuilder height(double height){
+            this.height = height;
+            computeVolume();
+            return this;
+        }
+        private void computeVolume(){
+            this.volume = this.length*this.width*this.height;
+            computeCost();
+        }
+        private void computeCost(){
             this.cost = 0.4 * this.volume;
         }
-        return this.cost;
-    }
 
-    public double getCost(Rule rule){
-        this.cost = rule.computeCost(this);
-        return this.cost;
     }
 }

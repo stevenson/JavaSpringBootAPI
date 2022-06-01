@@ -28,26 +28,21 @@ public class Parcel {
     private double volume;
     private double cost;
 
-    public static class ParcelBuilder {
-        public ParcelBuilder weight(double weight){
-            this.weight = weight;
+    public static ParcelBuilder builder() {
+        return new ParcelBuilder(){
+            @Override
+            public Parcel build() {
+                prebuild();
+                return super.build();
+            }
+        };
+    }
+
+    public static class ParcelBuilder  {
+        void prebuild(){
+            // additional processing with class fields can be performed here
+            computeVolume();
             computeCost();
-            return this;
-        }
-        public ParcelBuilder length(double length){
-            this.length = length;
-            computeVolume();
-            return this;
-        }
-        public ParcelBuilder width(double width){
-            this.width = width;
-            computeVolume();
-            return this;
-        }
-        public ParcelBuilder height(double height){
-            this.height = height;
-            computeVolume();
-            return this;
         }
         private void computeVolume(){
             this.volume = this.length*this.width*this.height;
@@ -56,6 +51,6 @@ public class Parcel {
         private void computeCost(){
             this.cost = 0.4 * this.volume;
         }
-
     }
+
 }

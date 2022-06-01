@@ -9,8 +9,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
-import java.time.LocalDateTime;
-
 import static javax.persistence.GenerationType.AUTO;
 
 @Entity
@@ -28,9 +26,9 @@ public class Rule {
     private String name;
     private String param;
     private String condition;
-    private double comparison;
-    private double costRate;
-    private String costFactor;
+    private double threshold;
+    private double rate;
+    private String factor;
 
     public boolean applies(Parcel parcel){
         double checkParam = 0;
@@ -45,19 +43,19 @@ public class Rule {
         }
         switch(this.condition){
             case "exceeds":
-                return checkParam > this.comparison;
+                return checkParam > this.threshold;
             case "below":
             default:
-                return checkParam < this.comparison;
+                return checkParam < this.threshold;
         }
     }
     public double computeCost(Parcel parcel){
-        switch(costFactor){
+        switch(factor){
             case "weight":
-                return this.costRate * parcel.getWeight();
+                return this.rate * parcel.getWeight();
             case "volume":
             default:
-                return this.costRate *  parcel.getVolume();
+                return this.rate *  parcel.getVolume();
         }
     }
 }

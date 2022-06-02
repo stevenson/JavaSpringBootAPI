@@ -43,7 +43,7 @@ class DefaultParcelControllerTest {
     void addParcelShouldComputeDefaultForNormalParcel() {
         // given
         double weight = 10, length = 3, width = 3, height = 3;
-        ParcelRequest request = new ParcelRequest( weight, length, width, height);
+        ParcelRequest request = new ParcelRequest( weight, length, width, height, null);
         Parcel normalParcel = Parcel.builder()
                 .weight(weight)
                 .length(length)
@@ -69,7 +69,7 @@ class DefaultParcelControllerTest {
     void addParcelShouldApplyRules() {
         // given
         double weight = 100, length = 3, width = 3, height = 3;
-        ParcelRequest request = new ParcelRequest( weight, length, width, height);
+        ParcelRequest request = new ParcelRequest( weight, length, width, height, null);
         Parcel normalParcel = Parcel.builder()
                 .weight(weight)
                 .length(length)

@@ -1,5 +1,6 @@
 package com.stevenson.parcel.api.controller;
 
+import com.stevenson.parcel.api.dto.ParcelRequest;
 import com.stevenson.parcel.api.dto.ParcelResponse;
 import com.stevenson.parcel.model.Parcel;
 import com.stevenson.parcel.model.Rule;
@@ -33,7 +34,7 @@ public class DefaultParcelController implements ParcelController {
 
     @Override
     @PostMapping
-    public ResponseEntity<?> addParcel(@Valid @NonNull @RequestBody Parcel request) {
+    public ResponseEntity<?> addParcel(@Valid @NonNull @RequestBody ParcelRequest request) {
 
         Parcel parcel = parcelService.create(Parcel.builder()
                         .weight(request.getWeight())
@@ -49,6 +50,7 @@ public class DefaultParcelController implements ParcelController {
                 break;
             }
         }
+        System.out.print(request.getVoucherCode());
         ParcelResponse data = new ParcelResponse(parcel);
         HttpStatus responseStatus = HttpStatus.CREATED;
         if(data.getStatus() == "rejected"){

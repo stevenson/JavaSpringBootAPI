@@ -34,6 +34,8 @@ public class ParcelResponse {
         this.cost = parcel.getCost();
         if(this.cost == 0.0){
             this.status = "rejected";
+        }else{
+            this.status = "accepted";
         }
 
     }

@@ -59,10 +59,13 @@ public class Parcel {
         switch(rule.getFactor()){
             case "weight":
                 this.cost = rule.getRate() * this.weight;
+                break;
             case "volume":
             default:
                this.cost= rule.getRate() * this.volume;
+                break;
         }
+
     }
 
     public void applyVoucher(Voucher voucher){

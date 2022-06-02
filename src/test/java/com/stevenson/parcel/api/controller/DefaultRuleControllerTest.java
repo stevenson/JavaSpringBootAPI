@@ -1,9 +1,7 @@
 package com.stevenson.parcel.api.controller;
 
-import com.stevenson.parcel.api.dto.ParcelResponse;
 import com.stevenson.parcel.api.dto.RuleRequest;
 import com.stevenson.parcel.model.Rule;
-import com.stevenson.parcel.service.DefaultParcelService;
 import com.stevenson.parcel.service.DefaultRuleService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +14,6 @@ import org.springframework.http.ResponseEntity;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 

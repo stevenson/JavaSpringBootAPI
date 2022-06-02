@@ -34,6 +34,8 @@ public class Parcel {
     private double volume;
     private double cost;
 
+    private String voucherCode;
+
     public static ParcelBuilder builder() {
         return new ParcelBuilder(){
             @Override
@@ -46,7 +48,7 @@ public class Parcel {
 
     public static class ParcelBuilder  {
         void prebuild(){
-            // additional processing with class fields can be performed here
+            //NOTE: additional processing with class fields can be performed here
             computeVolume();
             computeDefaultCost();
         }
@@ -69,6 +71,7 @@ public class Parcel {
     }
 
     public void applyVoucher(Voucher voucher){
+        System.out.println("voucher discount: "+ voucher.getDiscount());
         this.cost = this.cost - voucher.getDiscount();
     }
 }

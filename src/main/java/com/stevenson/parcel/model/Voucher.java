@@ -17,6 +17,9 @@ public class Voucher {
     private LocalDate expiry;
 
     public boolean applies(){
-        return expiry.isAfter( LocalDate.now());
+        System.out.println("voucher expiry:"+this.expiry);
+        System.out.println("now :"+LocalDate.now());
+        System.out.println(this.expiry.isAfter( LocalDate.now()));
+        return this.expiry.isAfter( LocalDate.now());
     }
 }

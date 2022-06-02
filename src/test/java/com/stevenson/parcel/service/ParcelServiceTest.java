@@ -1,7 +1,6 @@
 package com.stevenson.parcel.service;
 
 import com.stevenson.parcel.model.Parcel;
-import com.stevenson.parcel.model.Rule;
 import com.stevenson.parcel.repo.ParcelRepo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -19,12 +18,22 @@ class ParcelServiceTest {
 
     @Mock
     private ParcelRepo repo;
-
+    @Mock
+    private RuleService ruleService;
+    @Mock
+    private VoucherService voucherService;
     private ParcelService service ;
+
+
+
+    ParcelServiceTest(RuleService ruleService, VoucherService voucherService) {
+        this.ruleService = ruleService;
+        this.voucherService = voucherService;
+    }
 
     @BeforeEach
     void setup(){
-        service = new DefaultParcelService(repo);
+        service = new DefaultParcelService(repo, ruleService, voucherService);
     }
 
     @Test

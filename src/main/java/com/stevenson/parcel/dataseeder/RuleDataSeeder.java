@@ -1,5 +1,6 @@
 package com.stevenson.parcel.dataseeder;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -8,20 +9,21 @@ import com.stevenson.parcel.model.Rule;
 import com.stevenson.parcel.repo.RuleRepo;
 
 @Component
+@Slf4j
 public class RuleDataSeeder implements CommandLineRunner {
 
     @Autowired
     RuleRepo repo;
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
         loadRuleData();
     }
 
     private void loadRuleData() {
-        System.out.println("Running seeder");
+        log.info("Running seeder: Creating 5 base rules");
         if (repo.count() == 0) {
-            Rule rule1 = Rule.builder()
+            Rule overweightRule = Rule.builder()
                     .priority(1)
                     .name("reject")
                     .param("weight")
@@ -30,9 +32,10 @@ public class RuleDataSeeder implements CommandLineRunner {
                     .rate(0.0)
                     .factor("weight")
                     .build();
-            repo.save(rule1);
-            System.out.println("Created rule: "+rule1.getName());
+            repo.save(overweightRule);
+            System.out.println("Created rule: "+overweightRule.getName());
         }
-        System.out.println(repo.count());
+        //TODO: add other rules
+        log.info("- rule count = "+repo.count());
     }
 }

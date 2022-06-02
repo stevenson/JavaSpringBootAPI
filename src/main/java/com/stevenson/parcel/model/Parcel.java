@@ -68,4 +68,7 @@ public class Parcel {
         }
     }
 
+    public void applyVoucher(Voucher voucher){
+        this.cost = this.cost - voucher.getDiscount();
+    }
 }

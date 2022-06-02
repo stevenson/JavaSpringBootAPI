@@ -4,8 +4,12 @@ import com.stevenson.parcel.api.dto.ParcelRequest;
 import com.stevenson.parcel.api.dto.ParcelResponse;
 import com.stevenson.parcel.model.Parcel;
 import com.stevenson.parcel.model.Rule;
+import com.stevenson.parcel.model.Voucher;
+import com.stevenson.parcel.service.DefaultVoucherService;
 import com.stevenson.parcel.service.ParcelService;
 import com.stevenson.parcel.service.RuleService;
+import com.stevenson.parcel.service.VoucherService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -19,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 @RequestMapping("api/v1/parcels")
 @RestController
@@ -26,10 +31,13 @@ public class DefaultParcelController implements ParcelController {
 
     private final ParcelService parcelService;
     private final RuleService ruleService;
+    private final VoucherService voucherService;
 
-    public DefaultParcelController(ParcelService service, RuleService ruleService) {
+    @Autowired
+    public DefaultParcelController(ParcelService service, RuleService ruleService, VoucherService voucherService, VoucherService voucherService1) {
         this.parcelService = service;
         this.ruleService = ruleService;
+        this.voucherService = voucherService1;
     }
 
     @Override
@@ -50,7 +58,13 @@ public class DefaultParcelController implements ParcelController {
                 break;
             }
         }
-        System.out.print(request.getVoucherCode());
+        System.out.println("voucherCode: "+ request.getVoucherCode());
+        if(request.getVoucherCode()!= null ){
+            Optional<Voucher> optional = voucherService.retrieve(request.getVoucherCode());
+            if(!optional.isEmpty() && optional.get().applies()){
+                parcel.applyVoucher(optional.get());
+            }
+        }
         ParcelResponse data = new ParcelResponse(parcel);
         HttpStatus responseStatus = HttpStatus.CREATED;
         if(data.getStatus() == "rejected"){

@@ -34,20 +34,8 @@ public class DefaultParcelService implements ParcelService{
 
     @Override
     public Parcel create(Parcel parcel) {
-        Pageable paging = PageRequest.of(0, 5, Sort.by(Sort.Direction.ASC, "priority"));
-        List<Rule> rules = ruleService.retrieveAll(paging);
-        for(Rule rule: rules){
-            if(rule.applies(parcel)){
-                parcel.applyRule(rule);
-                break;
-            }
-        }
-        if(parcel.getVoucherCode()!= null ){
-            Optional<Voucher> optional = voucherService.retrieve(parcel.getVoucherCode());
-            if(!optional.isEmpty() && optional.get().applies()){
-                parcel.applyVoucher(optional.get());
-            }
-        }
+        applyRules(parcel);
+        applyVoucher(parcel);
         if(parcel.getCost() == 0){
             throw new ApiRejectException("Parcel cost not computed Rejection due to rule.");
         }
@@ -68,5 +56,27 @@ public class DefaultParcelService implements ParcelService{
     @Override
     public Optional<Parcel> retrieve(long id) {
         return repo.findById(id);
+    }
+
+    public Parcel applyRules(Parcel parcel){
+        Pageable paging = PageRequest.of(0, 5, Sort.by(Sort.Direction.ASC, "priority"));
+        List<Rule> rules = ruleService.retrieveAll(paging);
+        for(Rule rule: rules){
+            if(rule.applies(parcel)){
+                parcel.applyRule(rule);
+                break;
+            }
+        }
+        return parcel;
+    }
+
+    public Parcel applyVoucher(Parcel parcel){
+        if(parcel.getVoucherCode()!= null ){
+            Optional<Voucher> optional = voucherService.retrieve(parcel.getVoucherCode());
+            if(!optional.isEmpty() && optional.get().applies()){
+                parcel.applyVoucher(optional.get());
+            }
+        }
+        return parcel;
     }
 }

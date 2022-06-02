@@ -24,13 +24,6 @@ class ParcelServiceTest {
     private VoucherService voucherService;
     private ParcelService service ;
 
-
-
-    ParcelServiceTest(RuleService ruleService, VoucherService voucherService) {
-        this.ruleService = ruleService;
-        this.voucherService = voucherService;
-    }
-
     @BeforeEach
     void setup(){
         service = new DefaultParcelService(repo, ruleService, voucherService);

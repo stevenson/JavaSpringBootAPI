@@ -33,7 +33,7 @@ public class DefaultParcelController implements ParcelController {
 
     @Override
     @PostMapping
-    public ResponseEntity<ParcelResponse> addParcel(@Valid @NonNull @RequestBody Parcel request) {
+    public ResponseEntity<?> addParcel(@Valid @NonNull @RequestBody Parcel request) {
 
         Parcel parcel = parcelService.create(Parcel.builder()
                         .weight(request.getWeight())
@@ -50,16 +50,20 @@ public class DefaultParcelController implements ParcelController {
             }
         }
         ParcelResponse data = new ParcelResponse(parcel);
-        return new ResponseEntity<>(data, HttpStatus.CREATED);
+        HttpStatus responseStatus = HttpStatus.CREATED;
+        if(data.getStatus() == "rejected"){
+            responseStatus = HttpStatus.BAD_REQUEST;
+        }
+        return new ResponseEntity<>(data, responseStatus);
     }
 
     @Override
-    public ResponseEntity<List<ParcelResponse>> getAllParcel(Integer page, Integer pageSize, String sortBy, Sort.Direction direction) {
+    public ResponseEntity<List<?>> getAllParcel(Integer page, Integer pageSize, String sortBy, Sort.Direction direction) {
         return null;
     }
 
     @Override
-    public ResponseEntity<ParcelResponse> getParcel(long id) {
+    public ResponseEntity<?> getParcel(long id) {
         return null;
     }
 }

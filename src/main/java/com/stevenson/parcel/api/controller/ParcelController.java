@@ -8,10 +8,10 @@ import org.springframework.http.ResponseEntity;
 import java.util.List;
 
 public interface ParcelController {
-    ResponseEntity<ParcelResponse> addParcel(Parcel request);
+    ResponseEntity<?> addParcel(Parcel request);
 
-    ResponseEntity<List<ParcelResponse>> getAllParcel(
+    ResponseEntity<List<?>> getAllParcel(
             Integer page, Integer pageSize, String sortBy, Sort.Direction direction);
 
-    ResponseEntity<ParcelResponse> getParcel(long id);
+    ResponseEntity<?> getParcel(long id);
 }

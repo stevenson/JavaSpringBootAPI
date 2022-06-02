@@ -22,6 +22,8 @@ public class ParcelResponse {
     private double cost;
     private double volume;
 
+    private String status;
+
     public ParcelResponse(Parcel parcel){
         this.id = parcel.getId();
         this.weight = parcel.getWeight();
@@ -30,5 +32,9 @@ public class ParcelResponse {
         this.height = parcel.getHeight();
         this.volume = parcel.getVolume();
         this.cost = parcel.getCost();
+        if(this.cost == 0.0){
+            this.status = "rejected";
+        }
+
     }
 }

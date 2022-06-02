@@ -33,7 +33,7 @@ public class RuleDataSeeder implements CommandLineRunner {
                     .factor("weight")
                     .build();
             repo.save(overweightRule);
-            System.out.println("Created rule: "+overweightRule.getName());
+            log.info("Created rule: "+overweightRule.getName());
         }
         //TODO: add other rules
         log.info("- rule count = "+repo.count());

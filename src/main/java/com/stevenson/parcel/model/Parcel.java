@@ -4,15 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-
-import java.util.List;
 
 import static javax.persistence.GenerationType.AUTO;
 
@@ -71,7 +66,6 @@ public class Parcel {
     }
 
     public void applyVoucher(Voucher voucher){
-        System.out.println("voucher discount: "+ voucher.getDiscount());
         this.cost = this.cost - voucher.getDiscount();
     }
 }

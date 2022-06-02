@@ -18,14 +18,11 @@ public class DefaultVoucherService implements VoucherService{
     @Override
     public Optional<Voucher> retrieve(String key) {
         RestTemplate restTemplate = new RestTemplate();
-        System.out.println(voucherServiceUrl);
         UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(voucherServiceUrl+key)
                 .queryParam("key","apikey");
-        System.out.println(builder.buildAndExpand().toUri());
         ResponseEntity<Voucher>  response = restTemplate.getForEntity(
                 builder.buildAndExpand().toUri(),
                 Voucher.class);
-        System.out.println(response);
         Voucher voucher = response.getBody();
 
         return Optional.ofNullable(voucher);

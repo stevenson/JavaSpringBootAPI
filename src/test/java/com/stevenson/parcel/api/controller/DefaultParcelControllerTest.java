@@ -3,12 +3,8 @@ package com.stevenson.parcel.api.controller;
 import com.stevenson.parcel.api.dto.ParcelRequest;
 import com.stevenson.parcel.api.dto.ParcelResponse;
 import com.stevenson.parcel.model.Parcel;
-import com.stevenson.parcel.model.Rule;
 import com.stevenson.parcel.model.Voucher;
-import com.stevenson.parcel.repo.ParcelRepo;
 import com.stevenson.parcel.service.DefaultParcelService;
-import com.stevenson.parcel.service.DefaultRuleService;
-import com.stevenson.parcel.service.DefaultVoucherService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,8 +14,6 @@ import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.ResponseEntity;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 import static org.hamcrest.MatcherAssert.assertThat;

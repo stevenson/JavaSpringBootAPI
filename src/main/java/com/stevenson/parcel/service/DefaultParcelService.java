@@ -36,8 +36,6 @@ public class DefaultParcelService implements ParcelService{
     public Parcel create(Parcel parcel) {
         Pageable paging = PageRequest.of(0, 5, Sort.by(Sort.Direction.ASC, "priority"));
         List<Rule> rules = ruleService.retrieveAll(paging);
-        System.out.println(" rules "+ rules.size());
-        System.out.println(" parcel coupon "+  parcel.getVoucherCode());
         for(Rule rule: rules){
             if(rule.applies(parcel)){
                 parcel.applyRule(rule);
@@ -46,13 +44,8 @@ public class DefaultParcelService implements ParcelService{
         }
         if(parcel.getVoucherCode()!= null ){
             Optional<Voucher> optional = voucherService.retrieve(parcel.getVoucherCode());
-            System.out.println("does voucher apply?"+optional.get().applies());
-            System.out.println("is there a voucher?"+!optional.isEmpty() );
             if(!optional.isEmpty() && optional.get().applies()){
-                System.out.println(" cost without voucher "+parcel.getCost());
                 parcel.applyVoucher(optional.get());
-                System.out.println("apply voucher: ");
-                System.out.println(" new cost "+parcel.getCost());
             }
         }
         if(parcel.getCost() == 0){

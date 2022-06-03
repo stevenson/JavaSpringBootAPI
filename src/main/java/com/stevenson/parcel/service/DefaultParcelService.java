@@ -58,20 +58,19 @@ public class DefaultParcelService implements ParcelService{
         return repo.findById(id);
     }
 
-    public Parcel applyRules(Parcel parcel){
+    private Parcel applyRules(Parcel parcel){
         Pageable paging = PageRequest.of(0, 5, Sort.by(Sort.Direction.ASC, "priority"));
         List<Rule> rules = ruleService.retrieveAll(paging);
-        for(Rule rule: rules){
-            if(rule.applies(parcel)){
+        for(Rule rule: rules) {
+            if (rule.applies(parcel)) {
                 parcel.applyRule(rule);
                 break;
             }
         }
-
         return parcel;
     }
 
-    public Parcel applyVoucher(Parcel parcel){
+    private Parcel applyVoucher(Parcel parcel){
         if(parcel.getVoucherCode()!= null ){
             Optional<Voucher> optional = voucherService.retrieve(parcel.getVoucherCode());
             if(!optional.isEmpty() && optional.get().applies()){
